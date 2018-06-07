@@ -34,10 +34,10 @@ class Channel {
     this.channel = channel;
   }
   add(item) {
-    return add(item);
+    return add(this.cahnnel, item);
   }
   del(item) {
-    return del(item);
+    return del(this.cahnnel, item);
   }
 }
 

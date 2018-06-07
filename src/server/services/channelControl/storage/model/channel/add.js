@@ -7,7 +7,7 @@
 
 import { logger } from 'logger';
 
-const add = item => {
+const add = (channel, item) => {
   let result;
   if (item) {
     const {
@@ -18,7 +18,7 @@ const add = item => {
       aboutChannel
     } = item;
     if (channelUUID && createrUUID && ownerUUID) {
-      this.channel
+      channel
         .create({
           channelUUID: channelUUID,
           createrUUID: createrUUID,

@@ -6,12 +6,12 @@
  */
 
 import { logger } from 'logger';
-const add = item => {
+const add = (participant, item) => {
   let result;
   if (item) {
     const { channelUUID, participanUUID } = item;
     if (channelUUID && participanUUID) {
-      this.participamt
+      participant
         .create({
           channelUUID: channelUUID,
           participanUUID: participanUUID

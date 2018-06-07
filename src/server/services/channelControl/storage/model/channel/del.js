@@ -7,7 +7,7 @@
 
 import { logger } from 'logger';
 
-const del = item => {
+const del = (channel, item) => {
   let result;
   if (item) {
     const {} = item;

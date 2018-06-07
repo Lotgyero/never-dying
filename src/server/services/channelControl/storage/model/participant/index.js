@@ -27,7 +27,7 @@ class Participant {
     this.participant = participant;
   }
   add(item) {
-    return add(item);
+    return add(this.participant, item);
   }
 }
 
