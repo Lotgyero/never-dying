@@ -1,0 +1,25 @@
+import { logger } from 'logger';
+import config from 'config';
+
+const databaseConfig = config.get('storage.channel');
+
+import Sequelize from 'sequelize';
+const connect = new Sequelize(databaseConfig);
+
+connect
+  .authenticate()
+  .then(() => {
+    logger.log({
+      level: 'info',
+      label: 'channel storage',
+      message: 'connection sucsessfull'
+    });
+  })
+  .catch(err => {
+    logger.log({
+      level: 'error',
+      label: 'channel storage',
+      message: err
+    });
+  });
+export { connect };

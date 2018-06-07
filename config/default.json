@@ -1,0 +1,15 @@
+{
+  "server":{
+    "heardbit": 1000
+  },
+  "storage":{
+    "channel":{
+      "host"       : "localhost",
+      "username"   : "",
+      "password"   : "",
+      "database"   : "",
+      "dialect"    : "postgres",
+      "operatorsAliases": "Op"
+    }
+  }
+}

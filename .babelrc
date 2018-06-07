@@ -1,0 +1,27 @@
+{
+  "presets": [
+    ["@babel/preset-env"],
+    ["@babel/preset-react"]
+  ],
+  "plugins": [
+    ["@babel/plugin-transform-runtime"],
+    ["@babel/plugin-transform-regenerator"],
+    ["module-resolver",{
+      "root": ["./src"],
+      "alias":{
+        "local-paths":"./src/local-paths",
+        "js":"./src/scripts",
+        "devel":"./src/server/develop",
+        "componentsLib": "./src/scripts/interface/panel/components/lib",
+        "reducersLib":"./src/scripts/interface/panel/reducers",
+        "logger":"./src/server/logger"
+      }}]],
+  "env":{
+    "development": {
+      "plugins": []
+    },
+    "production": {
+      "plugins": []
+    }
+  }
+}
