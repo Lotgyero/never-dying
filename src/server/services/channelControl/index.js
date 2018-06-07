@@ -1,25 +1,25 @@
-import uuidv4 from 'uuid/v4';
-import uuidv5 from 'uuid/v5';
-const now = uuidv4();
-
+/*
+  service   :  channelControl
+ */
 import config from 'config';
-
 import { logger } from 'logger';
 
 import { Channel } from './channel';
 
-import { storage } from './storage';
-
 class ChannelControl {
   constructor() {
     let channels = [];
-    this.create = chanel => {
-      this.channels.push(chanel);
+    this.create = (ownerUUID, namespace) => {
+      const newChannel = new Channel(ownerUUID, namespace);
+      channels.push(newChannel);
+      return newChannel;
     };
+    this.remove = cannelID => {};
   }
-  create(id_owner, namespace) {
-    this.create(new Channel(id_owner, namespace));
+  create(ownerUUID, namespace) {
+    return this.create(ownerUUID, namespace);
   }
+  remove(channelUUID) {}
 }
 
 const channelControl = new ChannelControl();

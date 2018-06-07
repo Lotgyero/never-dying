@@ -1,3 +1,9 @@
+/*
+  service   :  channelControl
+  subsustem :  storage
+  model     :  participan
+ */
+
 import { logger } from 'logger';
 import Sequelize from 'sequelize';
 
