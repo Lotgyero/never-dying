@@ -2,29 +2,42 @@ import { logger } from 'logger';
 import Sequelize from 'sequelize';
 
 import { connect } from '../../connect';
-
+import { add } from './add';
+import { del } from './del';
 class Channel {
   constructor() {
     const channel = connect.define('Channel', {
-      uuid: {
+      channelUUID: {
         type: Sequelize.UUID,
-        unique: 'uuid',
+        unique: 'channelUUID',
         allowNull: false
       },
-      creater: {
+      createrUUID: {
         type: Sequelize.UUID,
         allowNull: false
       },
-      name: {
+      ownerUUID: {
+        type: Sequelize.UUID,
+        allowNull: false
+      },
+      nameChannel: {
         type: Sequelize.TEXT
       },
-      about: {
+      aboutChannel: {
         type: Sequelize.TEXT
       },
-      deleteBy: {
+      deleteByUUID: {
         type: Sequelize.UUID
       }
     });
+
+    this.channel = channel;
+  }
+  add(item) {
+    return add(item);
+  }
+  del(item) {
+    return del(item);
   }
 }
 

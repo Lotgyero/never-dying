@@ -64,7 +64,7 @@ class Connection {
         }
         logger.log({
           level: 'info',
-          label: 'message',
+          label: 'message send',
           message: { id: this.id, msg: msg }
         });
       }

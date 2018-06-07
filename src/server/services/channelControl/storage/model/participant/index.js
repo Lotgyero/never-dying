@@ -3,6 +3,8 @@ import Sequelize from 'sequelize';
 
 import { connect } from '../../connect';
 
+import { add } from './add';
+
 class Participant {
   constructor() {
     const participant = connect.define('Participant', {
@@ -12,14 +14,22 @@ class Participant {
         defaultValue: Sequelize.UUIDV4,
         allowNull: false
       },
-      uuidChannel: {
+      channelUUID: {
         type: Sequelize.UUID,
         allowNull: false
       },
-      uuidParticipan: {
+      participanUUID: {
         type: Sequelize.UUID,
         allowNull: false
       }
     });
+
+    this.participant = participant;
+  }
+  add(item) {
+    return add(item);
   }
 }
+
+const participant = new Participant();
+export { participant };
