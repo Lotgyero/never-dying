@@ -7,7 +7,8 @@ import { service } from './services';
 import { serviceConnectionControl } from './services/connectionControl';
 serviceConnectionControl.start();
 
-import { serviceChannelControl } from './services/channelControl';
+import { channelControl } from './services/channelControl';
+import { participantControl } from './services/participantControl';
 
 // const tik = setInterval(() => {
 //   console.log(currentConnection.Connections);

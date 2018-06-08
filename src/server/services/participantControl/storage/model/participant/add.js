@@ -1,5 +1,5 @@
 /*
-  service   :  channelControl
+  service   :  participantControl
   subsustem :  storage
   model     :  participan
   action    :  add
@@ -11,25 +11,25 @@ import { participantScheme } from './scheme';
 const add = item => {
   let result;
   if (item) {
-    const { channelUUID, participanUUID } = item;
-    if (channelUUID && participanUUID) {
+    const { participanUUID, participanLogin, participanPasswordHash } = item;
+    if (participanUUID && participanLogin && participanPasswordHash) {
       participantScheme
         .create({
-          channelUUID: channelUUID,
-          participanUUID: participanUUID
+          participanUUID: participanUUID,
+          participanLogin: participanLogin,
+          participanPasswordHash: participanPasswordHash
         })
         .then(res => {
           result = {
-            service: 'channel',
+            service: 'participan',
             subsystem: 'storage',
             data: {
-              channelUUID: `${res.dataValues.channelUUID}`,
               participanUUID: `${res.dataValues.participanUUID}`
             }
           };
           logger.log({
             level: 'info',
-            label: 'channel storage participant',
+            label: 'participant storage participant',
             message: {
               status: 'success',
               data: {
@@ -40,70 +40,63 @@ const add = item => {
         })
         .catch(error => {
           result = {
-            service: 'channel',
+            service: 'participan',
             subsystem: 'storage',
             data: null,
             error: {
-              message: 'adding pacipiant',
-              data: {
-                dataValues: {
-                  channelUUID: channelUUID,
-                  participanUUID: participanUUID
-                },
-                error: error
-              }
+              message: 'adding participant error',
+              data: error
             }
           };
           logger.log({
             level: 'error',
-            label: 'channel storage participant',
+            label: 'participant storage participant',
             message: {
               status: 'error',
-              data: error
+              dataValues: {
+                participanUUID: participanUUID,
+                participanLogin: participanLogin
+              },
+              data: {
+                message: 'adding pacipant error',
+                data: error
+              }
             }
           });
         });
     } else {
       result = {
-        service: 'channel',
+        service: 'participan',
         subsystem: 'storage',
         data: null,
         error: {
           message: 'some null value',
           data: {
             dataValues: {
-              channelUUID: channelUUID,
-              participanUUID: participanUUID
+              participanUUID: participanUUID,
+              participanLogin: participanLogin,
+              participanPasswordHash: participanPasswordHash ? true : false
             }
           }
         }
       };
-      logger.log({
-        level: 'error',
-        label: 'channel storage participant',
-        message: {
-          status: 'error',
-          data: {
-            channelUUID: channelUUID,
-            participanUUID: participanUUID
-          }
-        }
-      });
     }
   } else {
     result = {
-      service: 'channel',
+      service: 'participan',
       subsystem: 'storage',
       data: null,
-      error: { message: 'adding participant', data: null }
+      error: {
+        message: 'adding participant',
+        data: null
+      }
     };
     logger.log({
       level: 'error',
-      label: 'channel storage participant',
+      label: 'participant storage participant',
       message: {
         status: 'error',
-        message: 'adding null data',
-        data: null
+        data: 'adding null data'
       }
     });
   }

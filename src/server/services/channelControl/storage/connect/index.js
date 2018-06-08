@@ -12,7 +12,7 @@ connect
     logger.log({
       level: 'info',
       label: 'channel storage',
-      message: { status: 'successful', data: 'connection sucsessfull' }
+      message: { status: 'successful', data: 'connection successful' }
     });
   })
   .catch(err => {

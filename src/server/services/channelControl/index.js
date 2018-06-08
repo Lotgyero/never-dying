@@ -1,8 +1,6 @@
 /*
   service   :  channelControl
  */
-import config from 'config';
-import { logger } from 'logger';
 
 import { Channel } from './channel';
 

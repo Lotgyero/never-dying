@@ -10,6 +10,14 @@
       "database"   : "",
       "dialect"    : "postgres",
       "operatorsAliases": "Op"
+    },
+    "participant":{
+      "host"       : "localhost",
+      "username"   : "",
+      "password"   : "",
+      "database"   : "",
+      "dialect"    : "postgres",
+      "operatorsAliases": "Op"
     }
   }
 }

@@ -10,6 +10,6 @@ class ParticipantControl {
   }
 }
 
-const patricipant = new ParticipantControl();
+const participantControl = new ParticipantControl();
 
 export { participantControl };
