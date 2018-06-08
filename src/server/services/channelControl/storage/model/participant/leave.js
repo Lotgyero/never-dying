@@ -1,6 +1,6 @@
 /*
   service   :  channelControl
-  subsustem :  storage
+  subsystem :  storage
   model     :  participan
   action    :  leave
  */
@@ -11,94 +11,98 @@ import { participantScheme } from './scheme';
 const leave = item => {
   let result;
   if (item) {
-    const { channelUUID, participanUUID } = item;
-    if (channelUUID && participanUUID) {
+    const { channelUUID, participantUUID } = item;
+    if (channelUUID && participantUUID) {
       participantScheme
         .update(
           {
-            dateLeave: new Date()
+            participantDateLeave: new Date()
           },
           {
             where: {
-              channelUUID: channelUUID,
-              participanUUID: participanUUID
+              channelUUID,
+              participantUUID
             }
           }
         )
         .then(res => {
           result = {
-            service: 'channel',
-            subsustem: 'storage',
+            service: 'channelControl',
+            subsystem: 'storage',
+            action: 'leave',
             data: {
-              uuid: `${res.dataValues.uuid}`,
-              channelUUID: `${res.dataValues.channelUUID}`,
-              participanUUID: `${res.dataValues.participanUUID}`,
-              dateLeave: `${res.dataValues.dateLeave}`
+              uuid: res.dataValues.uuid,
+              channelUUID: res.dataValues.channelUUID,
+              participantUUID: res.dataValues.participantUUID,
+              participantDateLeave: res.dataValues.participantDateLeave
             }
           };
           logger.log({
             level: 'info',
-            label: 'channel storage participan leave',
+            label: 'channelControl storage participan leave',
             message: { status: 'success', data: res.dataValues }
           });
         })
         .catch(error => {
           result = {
-            service: 'channel',
-            subsustem: 'storage',
+            service: 'channelControl',
+            subsystem: 'storage',
+            action: 'leave',
             data: null,
             error: {
-              message: 'channel participant leave error',
+              message: 'channelControl participant leave error',
               data: error
             }
           };
           logger.log({
             level: 'error',
-            label: 'channel storage participan leave',
+            label: 'channelControl storage participan leave',
             message: { status: 'error', data: error }
           });
         });
     } else {
       result = {
-        service: 'channel',
-        subsustem: 'storage',
+        service: 'channelControl',
+        subsystem: 'storage',
+        action: 'leave',
         data: null,
         error: {
-          message: 'channel storage participant leave not full define',
+          message: 'channelControl storage participant leave not full define',
           data: {
-            channelUUID: channelUUID,
-            participanUUID: participanUUID
+            channelUUID,
+            participantUUID
           }
         }
       };
       logger.log({
         level: 'error',
-        label: 'channel storage participan leave',
+        label: 'channelControl storage participant leave',
         message: {
           status: 'error',
           data: {
-            channelUUID: channelUUID,
-            participanUUID: participanUUID
+            channelUUID,
+            participantUUID
           }
         }
       });
     }
   } else {
     result = {
-      service: 'channel',
-      subsustem: 'storage',
+      service: 'channelControl',
+      subsystem: 'storage',
+      action: 'leave',
       data: null,
       error: {
-        message: 'channel storage participant leave is null',
+        message: 'channelControl storage participant leave is null',
         data: null
       }
     };
     logger.log({
       level: 'error',
-      label: 'channel storage leave',
+      label: 'channelControl storage participant leave',
       message: {
         status: 'error',
-        data: 'channel storage participant leave null data'
+        data: 'channelControl storage participant leave null data'
       }
     });
   }

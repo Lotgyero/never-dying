@@ -1,6 +1,6 @@
 /*
   service   :  connectionControl
-  subsustem :  connection
+  subsystem :  connection
 */
 
 import uuidv4 from 'uuid/v4';

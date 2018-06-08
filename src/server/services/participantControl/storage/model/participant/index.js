@@ -1,6 +1,6 @@
 /*
   service   :  participantControl
-  subsustem :  storage
+  subsystem :  storage
   model     :  model
  */
 

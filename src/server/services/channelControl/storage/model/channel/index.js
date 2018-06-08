@@ -1,6 +1,6 @@
 /*
   service   :  channelControl
-  subsustem :  storage
+  subsystem :  storage
   model     :  channel
  */
 

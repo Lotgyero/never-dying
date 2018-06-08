@@ -1,6 +1,6 @@
 /*
   service   :  channelControl
-  subsustem :  storage
+  subsystem :  storage
   model     :  channel
   action    :  delete
  */
@@ -43,7 +43,7 @@ const remove = item => {
           .catch(error => {
             result = {
               service: 'channelControl',
-              subsustem: 'storage',
+              subsystem: 'storage',
               action: 'remove',
               data: null,
               error: {
