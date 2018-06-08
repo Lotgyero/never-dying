@@ -1,8 +1,8 @@
 /*
   service   :  channelControl
-  subsustem :  storage
+  subsystem :  storage
   model     :  channel
-  action    :  add
+  action    :  create
  */
 
 import { logger } from 'logger';
@@ -31,20 +31,22 @@ const create = item => {
           result = {
             service: 'channel',
             subsystem: 'storage',
+            action: 'create',
             data: {
-              channelUUID: `${res.dataValues.channelUUID}`,
-              createrUUID: `${res.dataValues.createrUUID}`,
-              ownerUUID: `${res.dataValues.ownerUUID}`,
-              nameChannel: `${res.dataValues.nameChannel}`,
-              aboutChannel: `${res.dataValues.aboutChannel}`,
-              deleteByUUID: `${res.dataValues.deleteByUUID}`
+              channelUUID: res.dataValues.channelUUID,
+              createrUUID: res.dataValues.createrUUID,
+              ownerUUID: res.dataValues.ownerUUID,
+              nameChannel: res.dataValues.nameChannel,
+              aboutChannel: res.dataValues.aboutChannel,
+              deleteByUUID: res.dataValues.deleteByUUID,
+              dateDestroy: res.dataValues.dateDestroy
             },
             error: null
           };
 
           logger.log({
             level: 'info',
-            label: 'channel storage channel create',
+            label: 'channelControl storage channel create',
             message: { status: 'success', data: res.dataValues }
           });
         })
@@ -52,15 +54,16 @@ const create = item => {
           result = {
             service: 'channel',
             subsystem: 'storage',
+            action: 'create',
             data: null,
             error: {
-              message: 'channel storage channel create error',
+              message: 'channelControl storage channel create error',
               data: error
             }
           };
           logger.log({
             level: 'error',
-            label: 'channel storage channel create',
+            label: 'channelControl storage channel create',
             message: { status: 'error', data: error }
           });
         });
@@ -68,19 +71,20 @@ const create = item => {
       result = {
         service: 'channel',
         subsystem: 'storage',
+        action: 'create',
         data: null,
         error: {
-          message: 'channel storage channel create not full define',
+          message: 'channelControl storage channel create not full define',
           data: {
-            channelUUID: channelUUID,
-            createrUUID: createrUUID,
-            ownerUUID: ownerUUID
+            channelUUID,
+            createrUUID,
+            ownerUUID
           }
         }
       };
       logger.log({
         level: 'info',
-        label: 'channel storage channel create',
+        label: 'channelControl storage channel create',
         message: {
           status: 'error',
           data: {
@@ -95,12 +99,13 @@ const create = item => {
     result = {
       service: 'channel',
       subsystem: 'storage',
+      action: 'create',
       data: null,
       error: { messege: 'channel storage channel create  is null' }
     };
   logger.log({
     level: 'error',
-    label: 'channel storage channel create',
+    label: 'channelControl storage channel create',
     message: {
       status: 'error',
       data: 'adding null data'

@@ -1,6 +1,6 @@
 /*
   service   :  participantControl
-  subsustem :  patricipant
+  subsystem :  patricipant
 */
 
 import { logger } from 'logger';

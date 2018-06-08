@@ -1,23 +1,34 @@
 /*
   service   :  channelControl
-  subsustem :  channel
+  subsystem :  channel
 */
 
 import { logger } from 'logger';
 
-import uuidv4 from 'uuid/v4';
-import uuidv5 from 'uuid/v5';
-const now = uuidv4();
+// import uuidv4 from 'uuid/v4';
+// import uuidv5 from 'uuid/v5';
+// const now = uuidv4();
 
 import { storage } from '../storage';
 
 class Channel {
-  constructor(id_owner, namespace = now) {
+  constructor(item) {
     let participants = [];
-    this.namespace = namespace;
-    this.channelUUID = uuidv5(id_owner, namespace);
-    this.storage = storage.model;
-    this.add = participant => {
+    const {
+      channelUUID,
+      createrUUID,
+      ownerUUID,
+      nameChannel,
+      aboutChannel
+    } = item;
+    this.channelUUID = channelUUID;
+    this.createrUUID = createrUUID;
+    this.ownerUUID = ownerUUID;
+    this.nameChannel = nameChannel;
+    this.aboutChannel = aboutChannel;
+
+    // this.storage = storage.model;
+    this.join = participant => {
       logger.log({
         level: 'info',
         label: 'channel add participant',
@@ -32,7 +43,7 @@ class Channel {
       });
     };
 
-    this.del = participant => {
+    this.leave = participant => {
       const newParticipant = participants.filter(part => {
         return part !== participant;
       });
@@ -46,7 +57,7 @@ class Channel {
     this.participants = () => {
       logger.log({
         level: 'info',
-        label: 'channel participans list',
+        label: 'channel participants list',
         message: { uuid: this.uuid, participants: participants }
       });
       return participants;
@@ -55,8 +66,8 @@ class Channel {
   add(participant) {
     this.add(participant);
   }
-  del(participant) {
-    this.del(participant);
+  remove(participant) {
+    this.remove(participant);
   }
   get participants() {
     return this.participants;

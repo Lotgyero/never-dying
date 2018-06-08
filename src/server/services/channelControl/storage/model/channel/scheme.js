@@ -1,6 +1,6 @@
 /*
   service   :  channelControl
-  subsustem :  storage
+  subsystem :  storage
   model     :  channel
   module    :  channelScheme
  */
@@ -22,16 +22,16 @@ const channelScheme = connect.define('Channel', {
     type: Sequelize.UUID,
     allowNull: false
   },
-  nameChannel: {
+  channelName: {
     type: Sequelize.TEXT
   },
-  aboutChannel: {
+  channelAbout: {
     type: Sequelize.TEXT
   },
   deleterUUID: {
     type: Sequelize.UUID
   },
-  dateDestroy: {
+  deleteDate: {
     type: Sequelize.DATE
   }
 });

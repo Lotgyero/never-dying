@@ -15,88 +15,93 @@ const remove = item => {
     if (channelUUID && deleterUUID) {
       channelScheme.update(
         {
-          deleterUUID: deleterUUID
+          deleterUUID,
+          deleteDate: new Date()
         },
-        { where: { channelUUID: channelUUID } }
+        { where: { channelUUID } }
           .then(res => {
             result = {
-              service: 'channel',
+              service: 'channelControl',
               subsystem: 'storage',
+              action: 'remove',
               data: {
-                channelUUID: `${res.dataValues.channelUUID}`,
-                createrUUID: `${res.dataValues.createrUUID}`,
-                ownerUUID: `${res.dataValues.ownerUUID}`,
-                nameChannel: `${res.dataValues.nameChannel}`,
-                aboutChannel: `${res.dataValues.aboutChannel}`,
-                deleteByUUID: `${res.dataValues.deleteByUUID}`
+                channelUUID: res.dataValues.channelUUID,
+                createrUUID: res.dataValues.createrUUID,
+                ownerUUID: res.dataValues.ownerUUID,
+                nameChannel: res.dataValues.nameChannel,
+                aboutChannel: res.dataValues.aboutChannel,
+                deleteByUUID: res.dataValues.deleteByUUID
               },
               error: null
             };
             logger.log({
               level: 'info',
-              label: 'channel storage ',
+              label: 'channelControl storage channel remove',
               message: { status: 'success', data: res.dataValues }
             });
           })
           .catch(error => {
             result = {
-              service: 'channel',
+              service: 'channelControl',
               subsustem: 'storage',
+              action: 'remove',
               data: null,
               error: {
-                message: 'channel remove error',
+                message: 'channelControl storage channel remove error',
                 data: error
               }
             };
             logger.log({
               level: 'error',
-              label: 'channel storage channel remove',
+              label: 'channelControl storage channel remove',
               message: { status: 'error', data: error }
             });
           })
       );
     } else {
       result = {
-        service: 'channel',
+        service: 'channelControl',
         subsystem: 'storage',
+        action: 'remove',
         data: null,
         error: {
-          message: 'channel storage channel remove not full define',
+          message: 'channelControl storage channel remove not full define',
           data: {
-            channelUUID: channelUUID,
-            deleterUUID: deleterUUID
+            channelUUID,
+            deleterUUID
           }
         }
       };
 
       logger.log({
         level: 'error',
-        label: 'channel storage channel remove',
+        label: 'channelControl storage channel remove',
         message: {
           status: 'error',
           data: {
-            channelUUID: channelUUID,
-            deleterUUID: deleterUUID
+            channelUUID,
+            deleterUUID
           }
         }
       });
     }
   } else {
     result = {
-      service: 'channel',
+      service: 'channelControl',
       subsystem: 'storage',
+      action: 'remove',
       data: null,
       error: {
-        message: 'channel storage channel remove is null',
+        message: 'channelControl storage channel remove is null',
         data: null
       }
     };
     logger.log({
       level: 'error',
-      label: 'channel storage chanel remove',
+      label: 'channelControl storage chanel remove',
       message: {
         status: 'error',
-        data: 'channel storage channel remove null data'
+        data: 'channelControl storage channel remove null data'
       }
     });
   }

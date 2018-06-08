@@ -1,7 +1,7 @@
 /*
   service   :  channelControl
-  subsustem :  storage
-  model     :  participan
+  subsystem :  storage
+  model     :  participant
   module    :  participantScheme
  */
 
@@ -20,12 +20,11 @@ const participantScheme = connect.define('Participant', {
     type: Sequelize.UUID,
     allowNull: false
   },
-  participanUUID: {
+  participantUUID: {
     type: Sequelize.UUID,
     allowNull: false
   },
-  dateLeave: {
-    // not full define causes
+  patricipantDateLeave: {
     type: Sequelize.DATE
   }
 });

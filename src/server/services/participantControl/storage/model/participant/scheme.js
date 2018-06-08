@@ -1,7 +1,7 @@
 /*
   service   :  channelControl
-  subsustem :  storage
-  model     :  participan
+  subsystem :  storage
+  model     :  participant
   module    :  participantScheme
  */
 
@@ -10,22 +10,21 @@ import Sequelize from 'sequelize';
 import { connect } from '../../connect';
 
 const participantScheme = connect.define('Participant', {
-  participanUUID: {
+  participantUUID: {
     type: Sequelize.UUID,
-    unique: 'participanUUID',
+    unique: 'participantUUID',
     allowNull: false
   },
-  participanLogin: {
+  participantLogin: {
     type: Sequelize.STRING(),
-    unique: 'participanLogin',
+    unique: 'participantLogin',
     allowNull: false
   },
-  participanPasswordHash: {
+  participantPasswordHash: {
     type: Sequelize.TEXT,
     allowNull: false
   },
-  dateLeave: {
-    // not full define causes
+  patricipantDateLeave: {
     type: Sequelize.DATE
   }
 });
