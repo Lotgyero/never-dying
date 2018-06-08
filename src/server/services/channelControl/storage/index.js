@@ -1,3 +1,8 @@
+/*
+  service   :  channelControl
+  subsustem :  storage
+ */
+
 import { logger } from 'logger';
 import { connect } from './connect';
 import { model } from './model';

@@ -6,8 +6,9 @@
  */
 
 import { logger } from 'logger';
+import { channelScheme } from './scheme';
 
-const add = (channel, item) => {
+const add = item => {
   let result;
   if (item) {
     const {
@@ -18,7 +19,7 @@ const add = (channel, item) => {
       aboutChannel
     } = item;
     if (channelUUID && createrUUID && ownerUUID) {
-      channel
+      channelScheme
         .create({
           channelUUID: channelUUID,
           createrUUID: createrUUID,
@@ -69,7 +70,7 @@ const add = (channel, item) => {
         subsystem: 'storage',
         data: null,
         error: {
-          message: 'channel storage channel not full define',
+          message: 'channel storage channel not full define to create',
           data: {
             channelUUID: channelUUID,
             createrUUID: createrUUID,

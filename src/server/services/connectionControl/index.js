@@ -1,10 +1,14 @@
+/*
+  service   :  connectionControl
+*/
+
 import { Server } from 'uws';
 
 import uuidv4 from 'uuid/v4';
 import uuidv5 from 'uuid/v5';
 const now = uuidv4();
 
-import { logger } from '../../logger';
+import { logger } from 'logger';
 
 // import config from 'config';
 

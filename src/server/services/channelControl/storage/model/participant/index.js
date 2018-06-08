@@ -5,36 +5,22 @@
  */
 
 import { logger } from 'logger';
-import Sequelize from 'sequelize';
 
-import { connect } from '../../connect';
-
+import { participantScheme } from './scheme';
 import { add } from './add';
+import { del } from './del';
 
 class Participant {
   constructor() {
-    const participant = connect.define('Participant', {
-      uuid: {
-        type: Sequelize.UUID,
-        unique: 'uuid',
-        defaultValue: Sequelize.UUIDV4,
-        allowNull: false
-      },
-      channelUUID: {
-        type: Sequelize.UUID,
-        allowNull: false
-      },
-      participanUUID: {
-        type: Sequelize.UUID,
-        allowNull: false
-      }
-    });
-
-    this.participant = participant;
+    this.participant = participantScheme;
   }
   add(item) {
-    return add(this.participant, item);
+    return add(item);
   }
+  del(item) {
+    return del(item);
+  }
+  search() {}
 }
 
 const participant = new Participant();

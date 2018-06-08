@@ -16,8 +16,14 @@ class Channel {
     let participants = [];
     this.namespace = namespace;
     this.uuid = uuidv5(id_owner, namespace);
-
+    this.storage = storage.model;
     this.add = participant => {
+      logger.log({
+        level: 'info',
+        label: 'channel add participant',
+        message: this.storage.participant.add(participant)
+      });
+      // FiX condition processing
       participants.push(participant);
       logger.log({
         level: 'info',

@@ -6,12 +6,14 @@
  */
 
 import { logger } from 'logger';
-const add = (participant, item) => {
+import { participantScheme } from './scheme';
+
+const add = item => {
   let result;
   if (item) {
     const { channelUUID, participanUUID } = item;
     if (channelUUID && participanUUID) {
-      participant
+      participantScheme
         .create({
           channelUUID: channelUUID,
           participanUUID: participanUUID
