@@ -2,13 +2,13 @@
   service   :  participantControl
   subsustem :  storage
   model     :  participan
-  action    :  add
+  action    :  create
  */
 
 import { logger } from 'logger';
 import { participantScheme } from './scheme';
 
-const add = item => {
+const create = item => {
   let result;
   if (item) {
     const { participanUUID, participanLogin, participanPasswordHash } = item;
@@ -29,7 +29,7 @@ const add = item => {
           };
           logger.log({
             level: 'info',
-            label: 'participant storage participant',
+            label: 'participant storage participant create',
             message: {
               status: 'success',
               data: {
@@ -44,13 +44,13 @@ const add = item => {
             subsystem: 'storage',
             data: null,
             error: {
-              message: 'adding participant error',
+              message: 'participant storage pacticipant create error',
               data: error
             }
           };
           logger.log({
             level: 'error',
-            label: 'participant storage participant',
+            label: 'participant storage participant create',
             message: {
               status: 'error',
               dataValues: {
@@ -58,7 +58,7 @@ const add = item => {
                 participanLogin: participanLogin
               },
               data: {
-                message: 'adding pacipant error',
+                message: 'participant storage participant create  error',
                 data: error
               }
             }
@@ -70,7 +70,7 @@ const add = item => {
         subsystem: 'storage',
         data: null,
         error: {
-          message: 'some null value',
+          message: 'participan storage participan create not full define',
           data: {
             dataValues: {
               participanUUID: participanUUID,
@@ -87,13 +87,13 @@ const add = item => {
       subsystem: 'storage',
       data: null,
       error: {
-        message: 'adding participant',
+        message: 'participant storage participan create is null',
         data: null
       }
     };
     logger.log({
       level: 'error',
-      label: 'participant storage participant',
+      label: 'participant storage participant create',
       message: {
         status: 'error',
         data: 'adding null data'
@@ -103,4 +103,4 @@ const add = item => {
   return result;
 };
 
-export { add };
+export { create };

@@ -15,7 +15,7 @@ class Channel {
   constructor(id_owner, namespace = now) {
     let participants = [];
     this.namespace = namespace;
-    this.uuid = uuidv5(id_owner, namespace);
+    this.channelUUID = uuidv5(id_owner, namespace);
     this.storage = storage.model;
     this.add = participant => {
       logger.log({

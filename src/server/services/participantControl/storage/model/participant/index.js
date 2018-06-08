@@ -7,14 +7,14 @@
 import { logger } from 'logger';
 
 import { participantScheme } from './scheme';
-import { add } from './add';
+import { create } from './create';
 
 class Participant {
   constructor() {
     this.participant = participantScheme;
   }
-  add(item) {
-    return add(item);
+  create(item) {
+    return create(item);
   }
 }
 

@@ -2,13 +2,13 @@
   service   :  channelControl
   subsustem :  storage
   model     :  participan
-  action    :  del
+  action    :  leave
  */
 
 import { logger } from 'logger';
 import { participantScheme } from './scheme';
 
-const del = item => {
+const leave = item => {
   let result;
   if (item) {
     const { channelUUID, participanUUID } = item;
@@ -38,7 +38,7 @@ const del = item => {
           };
           logger.log({
             level: 'info',
-            label: 'channel storage',
+            label: 'channel storage participan leave',
             message: { status: 'success', data: res.dataValues }
           });
         })
@@ -48,13 +48,13 @@ const del = item => {
             subsustem: 'storage',
             data: null,
             error: {
-              message: 'delete participant error',
+              message: 'channel participant leave error',
               data: error
             }
           };
           logger.log({
             level: 'error',
-            label: 'channel storage',
+            label: 'channel storage participan leave',
             message: { status: 'error', data: error }
           });
         });
@@ -64,7 +64,7 @@ const del = item => {
         subsustem: 'storage',
         data: null,
         error: {
-          message: 'channel storage participant not full define for delete',
+          message: 'channel storage participant leave not full define',
           data: {
             channelUUID: channelUUID,
             participanUUID: participanUUID
@@ -73,7 +73,7 @@ const del = item => {
       };
       logger.log({
         level: 'error',
-        label: 'storage',
+        label: 'channel storage participan leave',
         message: {
           status: 'error',
           data: {
@@ -89,20 +89,20 @@ const del = item => {
       subsustem: 'storage',
       data: null,
       error: {
-        message: 'channel storage participant deleting is null',
+        message: 'channel storage participant leave is null',
         data: null
       }
     };
     logger.log({
       level: 'error',
-      label: 'channel storage',
+      label: 'channel storage leave',
       message: {
         status: 'error',
-        data: 'channel storage participant deletin null data'
+        data: 'channel storage participant leave null data'
       }
     });
   }
   return result;
 };
 
-export { del };
+export { leave };

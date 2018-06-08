@@ -8,7 +8,7 @@
 import { logger } from 'logger';
 import { channelScheme } from './scheme';
 
-const del = item => {
+const remove = item => {
   let result;
   if (item) {
     const { channelUUID, deleterUUID } = item;
@@ -34,7 +34,7 @@ const del = item => {
             };
             logger.log({
               level: 'info',
-              label: 'channel storage',
+              label: 'channel storage ',
               message: { status: 'success', data: res.dataValues }
             });
           })
@@ -44,13 +44,13 @@ const del = item => {
               subsustem: 'storage',
               data: null,
               error: {
-                message: 'delete channel error',
+                message: 'channel remove error',
                 data: error
               }
             };
             logger.log({
               level: 'error',
-              label: 'channel storage',
+              label: 'channel storage channel remove',
               message: { status: 'error', data: error }
             });
           })
@@ -61,7 +61,7 @@ const del = item => {
         subsystem: 'storage',
         data: null,
         error: {
-          message: 'channel storage channel not full define for  delete',
+          message: 'channel storage channel remove not full define',
           data: {
             channelUUID: channelUUID,
             deleterUUID: deleterUUID
@@ -71,7 +71,7 @@ const del = item => {
 
       logger.log({
         level: 'error',
-        label: 'channel storage',
+        label: 'channel storage channel remove',
         message: {
           status: 'error',
           data: {
@@ -87,20 +87,20 @@ const del = item => {
       subsystem: 'storage',
       data: null,
       error: {
-        message: 'channel storage channel deleting is null',
+        message: 'channel storage channel remove is null',
         data: null
       }
     };
     logger.log({
       level: 'error',
-      label: 'channel storage',
+      label: 'channel storage chanel remove',
       message: {
         status: 'error',
-        data: 'channel storage channel deleting null data'
+        data: 'channel storage channel remove null data'
       }
     });
   }
   return result;
 };
 
-export { del };
+export { remove };

@@ -7,18 +7,18 @@
 import { logger } from 'logger';
 
 import { participantScheme } from './scheme';
-import { add } from './add';
-import { del } from './del';
+import { join } from './join';
+import { leave } from './leave';
 
 class Participant {
   constructor() {
     this.participant = participantScheme;
   }
-  add(item) {
-    return add(item);
+  join(item) {
+    return join(item);
   }
-  del(item) {
-    return del(item);
+  leave(item) {
+    return leave(item);
   }
   search() {}
 }

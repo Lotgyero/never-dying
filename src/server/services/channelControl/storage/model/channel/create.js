@@ -8,7 +8,7 @@
 import { logger } from 'logger';
 import { channelScheme } from './scheme';
 
-const add = item => {
+const create = item => {
   let result;
   if (item) {
     const {
@@ -44,7 +44,7 @@ const add = item => {
 
           logger.log({
             level: 'info',
-            label: 'channel storage channel',
+            label: 'channel storage channel create',
             message: { status: 'success', data: res.dataValues }
           });
         })
@@ -54,13 +54,13 @@ const add = item => {
             subsystem: 'storage',
             data: null,
             error: {
-              message: 'adding channel error',
+              message: 'channel storage channel create error',
               data: error
             }
           };
           logger.log({
             level: 'error',
-            label: 'channel storage channel',
+            label: 'channel storage channel create',
             message: { status: 'error', data: error }
           });
         });
@@ -70,7 +70,7 @@ const add = item => {
         subsystem: 'storage',
         data: null,
         error: {
-          message: 'channel storage channel not full define to create',
+          message: 'channel storage channel create not full define',
           data: {
             channelUUID: channelUUID,
             createrUUID: createrUUID,
@@ -80,7 +80,7 @@ const add = item => {
       };
       logger.log({
         level: 'info',
-        label: 'channel storage',
+        label: 'channel storage channel create',
         message: {
           status: 'error',
           data: {
@@ -96,11 +96,11 @@ const add = item => {
       service: 'channel',
       subsystem: 'storage',
       data: null,
-      error: { messege: 'channel storage channel adding  is null' }
+      error: { messege: 'channel storage channel create  is null' }
     };
   logger.log({
     level: 'error',
-    label: 'channel storage',
+    label: 'channel storage channel create',
     message: {
       status: 'error',
       data: 'adding null data'
@@ -109,4 +109,4 @@ const add = item => {
   return result;
 };
 
-export { add };
+export { create };

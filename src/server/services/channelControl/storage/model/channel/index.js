@@ -8,17 +8,17 @@ import { logger } from 'logger';
 
 import { channelScheme } from './scheme';
 
-import { add } from './add';
-import { del } from './del';
+import { create } from './create';
+import { remove } from './remove';
 class Channel {
   constructor() {
     this.channel = channelScheme;
   }
-  add(item) {
-    return add(item);
+  create(item) {
+    return create(item);
   }
-  del(item) {
-    return del(item);
+  remove(item) {
+    return remove(item);
   }
 }
 

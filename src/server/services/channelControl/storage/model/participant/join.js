@@ -2,13 +2,13 @@
   service   :  channelControl
   subsustem :  storage
   model     :  participan
-  action    :  add
+  action    :  join
  */
 
 import { logger } from 'logger';
 import { participantScheme } from './scheme';
 
-const add = item => {
+const join = item => {
   let result;
   if (item) {
     const { channelUUID, participanUUID } = item;
@@ -29,7 +29,7 @@ const add = item => {
           };
           logger.log({
             level: 'info',
-            label: 'channel storage participant',
+            label: 'channel storage participant join',
             message: {
               status: 'success',
               data: {
@@ -44,7 +44,7 @@ const add = item => {
             subsystem: 'storage',
             data: null,
             error: {
-              message: 'adding pacipiant',
+              message: 'pacipiant join',
               data: {
                 dataValues: {
                   channelUUID: channelUUID,
@@ -56,7 +56,7 @@ const add = item => {
           };
           logger.log({
             level: 'error',
-            label: 'channel storage participant',
+            label: 'channel storage participant join',
             message: {
               status: 'error',
               data: error
@@ -69,7 +69,7 @@ const add = item => {
         subsystem: 'storage',
         data: null,
         error: {
-          message: 'some null value',
+          message: 'some null value when join',
           data: {
             dataValues: {
               channelUUID: channelUUID,
@@ -80,7 +80,7 @@ const add = item => {
       };
       logger.log({
         level: 'error',
-        label: 'channel storage participant',
+        label: 'channel storage participant join',
         message: {
           status: 'error',
           data: {
@@ -95,14 +95,14 @@ const add = item => {
       service: 'channel',
       subsystem: 'storage',
       data: null,
-      error: { message: 'adding participant', data: null }
+      error: { message: 'join participant', data: null }
     };
     logger.log({
       level: 'error',
-      label: 'channel storage participant',
+      label: 'channel storage participant join',
       message: {
         status: 'error',
-        message: 'adding null data',
+        message: 'join null data',
         data: null
       }
     });
@@ -110,4 +110,4 @@ const add = item => {
   return result;
 };
 
-export { add };
+export { join };
