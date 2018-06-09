@@ -4,6 +4,8 @@
 
 import { Server } from 'uws';
 
+import config from 'config';
+
 import uuidv4 from 'uuid/v4';
 import uuidv5 from 'uuid/v5';
 const now = uuidv4();
@@ -15,20 +17,27 @@ import { logger } from 'logger';
 import { Connection } from './connection';
 
 class ConnectionControl {
-  constructor(namespace = now) {
-    this.namespace = namespace;
-    this.id = uuidv5(uuidv4(), namespace);
+  constructor() {
+    const namespaceUUID = config.get('connectionControl.uuid').namespace;
+    this.namespaceUUID = namespaceUUID;
+
     this.wss = null;
     let connections = [];
 
     this.connecting = ws => {
-      const newConnetion = new Connection(ws, this.disconnecting);
+      const newConnetion = new Connection(
+        namespaceUUID,
+        ws,
+        this.disconnecting
+      );
+
       connections.push(newConnetion);
+
       logger.log({
         level: 'info',
-        label: 'Server connection',
+        label: 'connectionControl connection',
         message: {
-          idConnectionControl: this.id,
+          namespaceUUID: this.uuid,
           count: connections.length,
           id_newconnection: newConnetion.id
         }

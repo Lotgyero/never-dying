@@ -13,7 +13,7 @@ import { storage } from '../storage';
 
 class Participant {
   constructor(namespace = now) {
-    this.id = uuidv5(uuidv4, namespace);
+    this.id = uuidv5(uuidv4(), namespace);
   }
   add(login, password) {}
   del(participanUUID) {}

@@ -1,7 +1,7 @@
 import { logger } from 'logger';
 import config from 'config';
 
-const databaseConfig = config.get('storage.participant');
+const databaseConfig = config.get('participantControl.storage');
 
 import Sequelize from 'sequelize';
 const connect = new Sequelize(databaseConfig);

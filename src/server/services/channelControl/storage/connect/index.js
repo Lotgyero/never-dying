@@ -1,7 +1,7 @@
 import { logger } from 'logger';
 import config from 'config';
 
-const databaseConfig = config.get('storage.channel');
+const databaseConfig = config.get('channelControl.storage');
 
 import Sequelize from 'sequelize';
 const connect = new Sequelize(databaseConfig);

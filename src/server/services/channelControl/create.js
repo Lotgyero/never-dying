@@ -25,17 +25,20 @@ const create = item => {
         channelName,
         channelAbout
       } = databaseResult.data;
+
+      const channel = new Channel({
+        channelUUID,
+        createrUUID,
+        ownerUUID,
+        channelName,
+        channelAbout
+      });
+
       result = {
         service: 'channelControl',
         subsystem: 'control',
         action: 'create',
-        data: {
-          channelUUID,
-          createrUUID,
-          ownerUUID,
-          channelName,
-          channelAbout
-        },
+        data: channel,
         error: null
       };
       logger.log({

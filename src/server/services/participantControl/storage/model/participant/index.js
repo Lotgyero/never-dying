@@ -8,6 +8,8 @@ import { logger } from 'logger';
 
 import { participantScheme } from './scheme';
 import { create } from './create';
+// import { remove } from './remove';
+import { authorization } from './authorization';
 
 class Participant {
   constructor() {
@@ -15,6 +17,9 @@ class Participant {
   }
   create(item) {
     return create(item);
+  }
+  authorization(item) {
+    return authorization(item);
   }
 }
 

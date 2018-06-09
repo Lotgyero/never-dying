@@ -2,7 +2,7 @@
   service   :  channelControl
   subsystem :  storage
   model     :  channel
-  action    :  delete
+  action    :  remove
  */
 
 import { logger } from 'logger';

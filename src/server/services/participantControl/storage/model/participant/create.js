@@ -3,7 +3,7 @@
   subsystem :  storage
   model     :  participant
   action    :  create
- */
+*/
 
 import { logger } from 'logger';
 import { participantScheme } from './scheme';
@@ -25,7 +25,11 @@ const create = item => {
             subsystem: 'storage',
             action: 'create',
             data: {
-              participantUUID: res.dataValues.participantUUID
+              participantUUID: res.dataValues.participantUUID,
+              participantLogin: res.dataValues.participantLogin,
+              participantPasswordHash: res.dataValues.participantPasswordHash
+                ? true
+                : false
             }
           };
           logger.log({
@@ -34,7 +38,11 @@ const create = item => {
             message: {
               status: 'success',
               data: {
-                dataValues: res.dataValues
+                participantUUID: res.dataValues.participantUUID,
+                participantLogin: res.dataValues.participantLogin,
+                participantPasswordHash: res.dataValues.participantPasswordHash
+                  ? true
+                  : false
               }
             }
           });
@@ -55,15 +63,13 @@ const create = item => {
             label: 'participantControl storage participant create',
             message: {
               status: 'error',
-              dataValues: {
+              message: 'create error',
+              data: {
                 participantUUID,
                 participantLogin,
                 participantPasswordHash: participantPasswordHash ? true : false
               },
-              data: {
-                message: 'participantControl storage participant create error',
-                data: error
-              }
+              error: error
             }
           });
         });
@@ -77,14 +83,25 @@ const create = item => {
           message:
             'participantControl storage participant create not full define',
           data: {
-            dataValues: {
-              participantUUID,
-              participantLogin,
-              participantPasswordHash: participantPasswordHash ? true : false
-            }
+            participantUUID,
+            participantLogin,
+            participantPasswordHash: participantPasswordHash ? true : false
           }
         }
       };
+      logger.log({
+        level: 'error',
+        label: 'participantControl storage participant create',
+        message: {
+          status: 'error',
+          message: 'adding null data',
+          data: {
+            participantUUID,
+            participantLogin,
+            participantPasswordHash: participantPasswordHash ? true : false
+          }
+        }
+      });
     }
   } else {
     result = {
@@ -102,7 +119,7 @@ const create = item => {
       label: 'participantControl storage participant create',
       message: {
         status: 'error',
-        data: 'adding null data'
+        message: 'adding null data'
       }
     });
   }

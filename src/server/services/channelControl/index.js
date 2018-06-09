@@ -1,6 +1,6 @@
 /*
   service   :  channelControl
- */
+*/
 
 // import { Channel } from './channel';
 
@@ -15,9 +15,16 @@ class ChannelControl {
     //   return newChannel;
     // };
     this.remove = cannelID => {};
+    this.channelCreate = channel => {
+      channels.push(channel);
+    };
   }
-  create(ownerUUID, namespace) {
-    return create(ownerUUID, namespace);
+  create(channelUUID, createrUUID, ownerUUID) {
+    const channelCreated = create(channelUUID, createrUUID, ownerUUID);
+    if (!channelCreated.error) {
+      this.createChannel(channelCreated.data);
+    }
+    return;
   }
   remove(channelUUID) {}
 }

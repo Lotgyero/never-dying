@@ -5,7 +5,6 @@
 
 import uuidv4 from 'uuid/v4';
 import uuidv5 from 'uuid/v5';
-const now = uuidv4();
 
 import config from 'config';
 
@@ -13,8 +12,8 @@ import { logger } from 'logger';
 import { Protocol } from '../../../../protocol';
 
 class Connection {
-  constructor(ws, disconnecting, namespace = now) {
-    this.id = uuidv5(uuidv4(), namespace);
+  constructor(namespaceUUID, ws, disconnecting) {
+    this.id = uuidv5(uuidv4(), namespaceUUID);
     this.ws = ws;
     this.disconnecting = disconnecting;
     this.protocol = new Protocol(logger);
@@ -27,7 +26,10 @@ class Connection {
       ws.ping('ping');
     };
 
-    const tick = setInterval(neardBit, config.get('server').heardbit);
+    const tick = setInterval(
+      neardBit,
+      config.get('connectionControl.connection').heardbit
+    );
 
     ws.on('close', reason => {
       clearInterval(tick);

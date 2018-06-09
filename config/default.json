@@ -1,9 +1,14 @@
 {
-  "server":{
-    "heardbit": 1000
+  "connectionControl":{
+    "connection":{
+      "heardbit": 1000
+    },
+    "uuid": {
+      "namespace":""
+    }
   },
-  "storage":{
-    "channel":{
+  "channelControl":{
+    "storage":{
       "host"       : "localhost",
       "username"   : "",
       "password"   : "",
@@ -11,13 +16,21 @@
       "dialect"    : "postgres",
       "operatorsAliases": "Op"
     },
-    "participant":{
+    "uuid": {
+      "namespace":""
+    }
+  },
+  "participantControl":{
+    "storage":{
       "host"       : "localhost",
       "username"   : "",
       "password"   : "",
       "database"   : "",
       "dialect"    : "postgres",
       "operatorsAliases": "Op"
+    },
+    "uuid": {
+      "namespace":""
     }
   }
 }
