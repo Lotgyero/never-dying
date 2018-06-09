@@ -2,16 +2,39 @@
   service   :  participantControl
 */
 
-import uuidv4 from 'uuid/v4';
-import uuidv5 from 'uuid/v5';
-const now = uuidv4();
+import config from 'config';
+import crypto from 'crypto';
+
+import { logger } from 'logger';
 
 import { create } from './create';
 
 class ParticipantControl {
-  constructor(namespace = now) {
-    this.participantControlID = uuidv5(uuidv4(), namespace);
+  constructor() {
     let activeParticipants = [];
+    const namespaceUUID = config.get('participantControl.uuid').namespace;
+    this.namespaceUUID = namespaceUUID;
+
+    this.create = async item => {
+      const { participantLogin, participantPassword } = item;
+      const key = crypto.pbkdf2Sync(
+        participantPassword,
+        'salt',
+        100000,
+        64,
+        'sha512'
+      );
+      const participantPasswordHash = key.toString();
+      logger.info(participantPasswordHash);
+      return await create({
+        participantLogin,
+        participantPasswordHash,
+        namespaceUUID
+      });
+    };
+  }
+  create(item) {
+    this.create(item);
   }
 }
 

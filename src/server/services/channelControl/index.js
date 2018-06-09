@@ -2,25 +2,34 @@
   service   :  channelControl
 */
 
-// import { Channel } from './channel';
+import uuidv5 from 'uuid/v5';
+
+import config from 'config';
 
 import { create } from './create';
 
 class ChannelControl {
   constructor() {
     let channels = [];
-    // this.create = (ownerUUID, namespace) => {
-    //   const newChannel = new Channel(ownerUUID, namespace);
-    //   channels.push(newChannel);
-    //   return newChannel;
-    // };
+    const namespaceUUID = config.get('channelControl.uuid').namespace;
+    this.namespaceUUID = namespaceUUID;
+
     this.remove = channelID => {};
-    this.channelCreate = channel => {
-      channels.push(channel);
+
+    this.channelCreate = item => {
+      let result;
+      const channel = create(item);
+      if (channel && channel.data && !channel.error) {
+        channels.push(channel.data);
+      }
     };
   }
-  create(channelUUID, createrUUID, ownerUUID) {
-    const channelCreated = create(channelUUID, createrUUID, ownerUUID);
+  create(createrUUID, ownerUUID) {
+    const channelCreated = create(
+      uuidv5(uuidv5, this.namespaceUUID),
+      createrUUID,
+      ownerUUID
+    );
     if (!channelCreated.error) {
       this.createChannel(channelCreated.data);
     }

@@ -14,13 +14,13 @@ import { participant } from './participant';
 import { storage } from './storage';
 const patricipantStorage = storage.model;
 
-const create = item => {
+const create = async item => {
   let result;
   if (item) {
-    const { participantLogin, participantPasswordHash, namespace } = item;
-    if (participantLogin && participantPasswordHash && namespace) {
-      const participantUUID = uuidv5(uuidv4(), namespace);
-      const databaseResult = (patricipantStorage.create = {
+    const { participantLogin, participantPasswordHash, namespaceUUID } = item;
+    if (participantLogin && participantPasswordHash && namespaceUUID) {
+      const participantUUID = uuidv5(uuidv4(), namespaceUUID);
+      const databaseResult = await patricipantStorage.participant.create({
         participantUUID,
         participantLogin,
         participantPasswordHash
@@ -34,7 +34,7 @@ const create = item => {
         error: {
           message: 'participantControl participant create not full define',
           data: {
-            namespace,
+            namespaceUUID,
             participantLogin,
             participantPasswordHash: participantPasswordHash ? true : false
           }
