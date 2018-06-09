@@ -14,7 +14,7 @@ class ChannelControl {
     //   channels.push(newChannel);
     //   return newChannel;
     // };
-    this.remove = cannelID => {};
+    this.remove = channelID => {};
     this.channelCreate = channel => {
       channels.push(channel);
     };

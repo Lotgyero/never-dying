@@ -13,7 +13,8 @@ import { Protocol } from '../../../../protocol';
 
 class Connection {
   constructor(namespaceUUID, ws, disconnecting) {
-    this.id = uuidv5(uuidv4(), namespaceUUID);
+    this.namespaceUUID = namespaceUUID;
+    this.connectionUUID = uuidv5(uuidv4(), namespaceUUID);
     this.ws = ws;
     this.disconnecting = disconnecting;
     this.protocol = new Protocol(logger);
@@ -36,7 +37,11 @@ class Connection {
       logger.log({
         level: 'info',
         label: 'Server connection close',
-        message: { id: this.id, 'connection close': reason }
+        message: {
+          namespaceUUID: this.namespaceUUID,
+          connectionUUID: this.connectionUUID,
+          'connection close': reason
+        }
       });
 
       this.disconnecting(this);
@@ -45,7 +50,7 @@ class Connection {
       logger.log({
         level: 'error',
         label: 'Server connection',
-        message: { id: this.id, error: error }
+        message: { connectionUUID: this.connectionUUID, error: error }
       });
     });
 
@@ -56,7 +61,11 @@ class Connection {
         logger.log({
           level: 'error',
           label: 'message',
-          message: { id: this.id, error: 'parser error' }
+          message: {
+            namespaceUUID: this.namespaceUUID,
+            connectionUUID: this.connectionUUID,
+            error: 'parser error'
+          }
         });
         //        ws.close(4999); // when error
       } else {
@@ -66,13 +75,21 @@ class Connection {
           logger.log({
             level: 'error',
             label: 'message send',
-            message: { id: this.id, error: error }
+            message: {
+              namespaceUUID: this.namespaceUUID,
+              connectionUUID: this.connectionUUID,
+              error: error
+            }
           });
         }
         logger.log({
           level: 'info',
           label: 'message send',
-          message: { id: this.id, msg: msg }
+          message: {
+            namespaceUUID: this.namespaceUUID,
+            connectionUUID: this.connectionUUID,
+            msg: msg
+          }
         });
       }
     };

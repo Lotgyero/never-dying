@@ -37,9 +37,9 @@ class ConnectionControl {
         level: 'info',
         label: 'connectionControl connection',
         message: {
-          namespaceUUID: this.uuid,
-          count: connections.length,
-          id_newconnection: newConnetion.id
+          namespaceUUID: this.namespaceUUID,
+          connectionUUID: newConnetion.connectionUUID,
+          count: connections.length
         }
       });
     };
@@ -51,11 +51,11 @@ class ConnectionControl {
       connections = newConnetions;
       logger.log({
         level: 'info',
-        label: 'Server connection close',
+        label: 'connectionControl connection close',
         message: {
-          idConnectionControl: this.id,
-          cont: connections.length,
-          id_closed_connection: connect.id
+          namespaceUUID: this.namespaceUUID,
+          id_closed_connection: connect.connectionUUID,
+          cont: connections.length
         }
       });
     };
@@ -63,8 +63,11 @@ class ConnectionControl {
       //for develop only
       logger.log({
         level: 'info',
-        label: 'Get All connections for Develop Only!',
-        message: { idConnectionControl: this.id, allConnections: connections }
+        label: 'connectionControl Get All connections for Develop Only!',
+        message: {
+          namespaceUUID: this.namespaceUUID,
+          allConnections: connections
+        }
       });
       return connections;
     };

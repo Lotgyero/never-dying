@@ -3,7 +3,7 @@
   subsystem :  storage
   model     :  channel
   action    :  remove
- */
+*/
 
 import { logger } from 'logger';
 import { channelScheme } from './scheme';
