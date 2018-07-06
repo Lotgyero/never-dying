@@ -3,7 +3,6 @@
 */
 
 import uuidv5 from 'uuid/v5';
-
 import config from 'config';
 
 import { create } from './create';
@@ -24,7 +23,7 @@ class ChannelControl {
       }
     };
   }
-  create(createrUUID, ownerUUID) {
+  create=(createrUUID, ownerUUID)=>{
     const channelCreated = create(
       uuidv5(uuidv5, this.namespaceUUID),
       createrUUID,
@@ -35,7 +34,7 @@ class ChannelControl {
     }
     return;
   }
-  remove(channelUUID) {}
+  remove=(channelUUID)=>{}
 }
 
 const channelControl = new ChannelControl();

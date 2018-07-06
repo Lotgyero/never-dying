@@ -13,10 +13,10 @@ class Storage {
   get model() {
     return model;
   }
-  close() {
+  close=()=>{
     connect.close();
   }
-  sync() {
+  sync=()=>{
     connect.sync();
   }
 }

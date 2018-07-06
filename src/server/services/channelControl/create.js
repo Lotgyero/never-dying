@@ -4,18 +4,31 @@
   action    :  create
 */
 
-import { logger } from 'logger';
+import { Result } from 'local-utils';
+const r = new Result({
+  service:   'channelControl',
+  module:    '',
+  system:    '',
+  subsystem: 'control',
+  action:    'create'
+});
 
+import { Channel } from './channel';
 import { storage } from './storage';
 const cannelStorage = storage.model;
 
-import { Channel } from './channel';
 
 const create = item => {
   let result;
   if (item) {
     const { channelUUID, createrUUID, ownerUUID } = item;
-
+    const data = {
+      channelUUID,
+      createrUUID,
+      ownerUUID,
+      channelName: item.channelName,
+      channelAbout: item.channelAbout
+    };
     if (channelUUID && createrUUID && ownerUUID) {
       const databaseResult = cannelStorage.chanel.create(item);
 
@@ -27,7 +40,6 @@ const create = item => {
           channelName,
           channelAbout
         } = databaseResult.data;
-
         const channel = new Channel({
           channelUUID,
           createrUUID,
@@ -36,84 +48,37 @@ const create = item => {
           channelAbout
         });
 
-        result = {
-          service: 'channelControl',
-          subsystem: 'control',
-          action: 'create',
-          data: channel,
+        result = r.result({
+          data:{
+            channel
+          },
           error: null
-        };
-        logger.log({
-          level: 'info',
-          label: 'channelControl channel create',
-          message: {
-            status: 'success',
-            data: databaseResult
-          }
         });
+
       } else {
-        result = {
-          service: 'channelControl',
-          subsystem: 'control',
-          action: 'create',
+        result = r.result({
           data: null,
-          error: {
-            message: 'database error',
-            data: null
-          }
-        };
-        logger.log({
-          level: 'error',
-          label: 'channelControl channel create',
-          message: {
-            status: 'error',
-            message: 'database error'
+          error:{
+            data,
+            error: databaseResult.error
           }
         });
       }
     } else {
-      result = {
-        service: 'channelControl',
-        subsystem: 'control',
-        action: 'create',
+      result = r.result({
         data: null,
-        error: {
-          message: 'create not full define ',
-          data: null
-        }
-      };
-      logger.log({
-        level: 'error',
-        label: 'channelControl channel create',
-        message: {
-          status: 'error',
-          data: {
-            dataValues: {
-              channelUUID,
-              createrUUID,
-              ownerUUID
-            }
-          }
+        error:{
+          data,
+          error: 'not full define'
         }
       });
     }
   } else {
-    result = {
-      service: 'channelControl',
-      subsystem: 'control',
-      action: 'create',
+    result = r.result({
       data: null,
-      error: {
-        message: 'is null',
-        data: {}
-      }
-    };
-    logger.log({
-      level: 'error',
-      label: 'channelControl channel create',
-      message: {
-        status: 'error',
-        data: 'adding null data'
+      error:{
+        data: null,
+        error: 'not full define'
       }
     });
   }

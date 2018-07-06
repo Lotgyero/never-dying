@@ -65,7 +65,7 @@ class ConnectionControl {
       return connections;
     };
   }
-  start(port = 3000) {
+  start=(port = 3000)=>{
     if (!this.wss) {
       this.wss = new Server({
         port: port
@@ -80,7 +80,7 @@ class ConnectionControl {
   get Connections() {
     return this.connections();
   }
-  stop() {
+  stop=()=>{
     if (this.wss) {
       let tikCount = 0;
       const tik = setInterval(() => {
@@ -107,10 +107,10 @@ class ServiceConnectionControl {
   constructor() {
     this.connectionControl = new ConnectionControl();
   }
-  start() {
+  start=()=> {
     this.connectionControl.start();
   }
-  stop() {
+  stop=()=>{
     this.connectionControl.stop();
   }
 }

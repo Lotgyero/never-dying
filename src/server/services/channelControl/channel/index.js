@@ -63,10 +63,10 @@ class Channel {
       return participants;
     };
   }
-  join(participant) {
+  join=(participant)=>{
     this.join(participant);
   }
-  remove(participant) {
+  remove=(participant)=>{
     this.remove(participant);
   }
   get participants() {

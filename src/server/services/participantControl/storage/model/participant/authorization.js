@@ -58,7 +58,7 @@ const authorization = item => {
                 data: null,
                 error: {
                   message:
-                    'participantControl storage participant authorization not found',
+                    'participantControl storage participant authorization not authorizate',
                   data: {
                     participantLogin,
                     participantPasswordHash: participantPasswordHash
@@ -72,7 +72,7 @@ const authorization = item => {
                 label: 'participantControl storage participant authorization',
                 message: {
                   status: 'error',
-                  message: 'participant not found',
+                  message: 'participant not authorizate',
                   data: {
                     participantLogin,
                     participantPasswordHash: participantPasswordHash

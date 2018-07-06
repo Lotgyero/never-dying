@@ -98,7 +98,7 @@ class Connection {
       onMessage(this.ws, message);
     });
   }
-  open() {}
+  open=()=>{}
 }
 
 export { Connection };

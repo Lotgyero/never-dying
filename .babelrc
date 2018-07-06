@@ -10,6 +10,7 @@
       "root": ["./src"],
       "alias":{
         "local-paths":"./src/local-paths",
+        "local-utils":"./src/local-utils",
         "js":"./src/scripts",
         "devel":"./src/server/develop",
         "componentsLib": "./src/scripts/interface/panel/components/lib",

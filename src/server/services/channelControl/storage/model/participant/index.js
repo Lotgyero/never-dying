@@ -14,13 +14,13 @@ class Participant {
   constructor() {
     this.participant = participantScheme;
   }
-  join(item) {
+  join=(item)=>{
     return join(item);
   }
-  leave(item) {
+  leave=(item)=>{
     return leave(item);
   }
-  search() {}
+  search=()=>{}
 }
 
 const participant = new Participant();
