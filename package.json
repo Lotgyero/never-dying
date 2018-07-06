@@ -71,7 +71,7 @@
     "babel-jest": "^23.0.1",
     "babel-loader": "^8.0.0-beta.4",
     "babel-plugin-module-resolver": "^3.1.1",
-    "eslint": "^4.19.1",
+    "eslint": "^5.0.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-prettier-standard": "^2.0.0",
     "eslint-config-standard": "^11.0.0",
@@ -84,7 +84,7 @@
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-react": "^7.8.2",
     "eslint-plugin-standard": "^3.1.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gutil": "^1.6.4",
     "jest": "^23.1.0",
     "mock-socket": "^7.1.0",
@@ -98,6 +98,6 @@
     "size-limit": "^0.18.3",
     "webpack": "^4.10.2",
     "webpack-stream": "^4.0.3",
-    "winston": "^3.0.0-rc6"
+    "winston": "^3.0.0"
   }
 }
