@@ -4,7 +4,15 @@
   model     :  model
  */
 
-import { logger } from 'logger';
+
+import { Result } from 'local-utils';
+const r = new Result({
+  service:   'channelControl',
+  module:    '',
+  system:    '',
+  subsystem: 'storage',
+  action:    ''
+});
 
 import { channel } from './channel';
 import { participant } from './participant';

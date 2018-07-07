@@ -5,14 +5,36 @@
   action    :  authorization
 */
 
-import { logger } from 'logger';
+
 import { participantScheme } from './scheme';
+
+import { Result } from 'local-utils';
+const r = new Result({
+  service:   'participantControl',
+  module:    '',
+  system:    'storage',
+  subsystem: 'participant',
+  action:    'authorization'
+});
 
 const authorization = item => {
   let result;
   if (item) {
-    const { participantLogin, participantPasswordHash } = item;
+    const {
+      participantLogin,
+      participantPasswordHash
+    } = item;
+
+    const data = {
+      participantLogin,
+      participantPasswordHash: participantPasswordHash ? true: false
+    };
+
     if (participantLogin && participantPasswordHash) {
+      const data = {
+        participantLogin,
+        participantPasswordHash: participantPasswordHash ? true: false
+      };
       participantScheme
         .findOne({
           where: {
@@ -25,109 +47,36 @@ const authorization = item => {
               res.dataValues.participantPasswordHash === participantPasswordHash
             ) {
               const { participantUUID, patricipantDateLeave } = res.dataValues;
-              result = {
-                service: 'participantControl',
-                subsystem: 'storage',
-                action: 'authorization',
+              result ={
                 data: {
-                  participantUUID,
                   participantLogin,
+                  participantUUID,
                   patricipantDateLeave
                 },
                 error: null
               };
-              logger.log({
-                level: 'info',
-                label: 'participantControl storage participant authorization',
-                message: {
-                  message: 'participant found',
-                  data: {
-                    participantUUID,
-                    participantLogin,
-                    participantPasswordHash: participantPasswordHash
-                      ? true
-                      : false
-                  }
-                }
-              });
+
             } else {
               result = {
-                service: 'participantControl',
-                subsystem: 'storage',
-                action: 'authorization',
                 data: null,
                 error: {
-                  message:
-                    'participantControl storage participant authorization not authorizate',
-                  data: {
-                    participantLogin,
-                    participantPasswordHash: participantPasswordHash
-                      ? true
-                      : false
-                  }
+                  data
                 }
               };
-              logger.log({
-                level: 'error',
-                label: 'participantControl storage participant authorization',
-                message: {
-                  status: 'error',
-                  message: 'participant not authorizate',
-                  data: {
-                    participantLogin,
-                    participantPasswordHash: participantPasswordHash
-                      ? true
-                      : false
-                  }
-                }
-              });
             }
           } else {
-            result = {
-              service: 'participantControl',
-              subsystem: 'storage',
-              action: 'authorization',
+            result = r.result({
               data: null,
-              error: {
-                message:
-                  'participantControl storage participant authorization not full define',
-                data: {
-                  dataValues: {
-                    participantLogin,
-                    participantPasswordHash
-                  }
-                }
-              }
-            };
-            logger.log({
-              level: 'error',
-              label: 'participantControl storage participant authorization',
-              message: {
-                status: 'error',
-                message: 'authorization with null data',
-                data: null
+              error:{
+                data: data
               }
             });
           }
         });
     } else {
-      result = {
-        service: 'participantControl',
-        subsystem: 'storage',
-        action: 'authorization',
+      result = r.result({
         data: null,
         error: {
-          message:
-            'participantControl storage participant authorization is null',
-          data: null
-        }
-      };
-      logger.log({
-        level: 'error',
-        label: 'participantControl storage participant authorization',
-        message: {
-          status: 'error',
-          message: 'authorization with null data',
           data: null
         }
       });

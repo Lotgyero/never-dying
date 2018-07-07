@@ -32,7 +32,7 @@ const leave = item => {
           }
         )
         .then(res => {
-          result = r.Result({
+          result = r.result({
             data:{
               uuid: res.dataValues.uuid,
               channelUUID: res.dataValues.channelUUID,
@@ -43,7 +43,7 @@ const leave = item => {
           });
         })
         .catch(error => {
-          result = r.Result({
+          result = r.result({
             data: null,
             error: {
               data: data,
@@ -52,7 +52,7 @@ const leave = item => {
           });
         });
     } else {
-      result = r.Result({
+      result = r.result({
         data: null,
         error:{
           data: data

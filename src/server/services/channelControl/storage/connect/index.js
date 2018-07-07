@@ -13,27 +13,34 @@ const namespaceUUID = config.get('channelControl.uuid').namespace;
 import Sequelize from 'sequelize';
 const connect = new Sequelize(databaseConfig);
 
+import { Result } from 'local-utils';
+const r = new Result({
+  service:   'channelControl',
+  module:    '',
+  system:    'storage',
+  subsystem: '',
+  action:    'connect'
+});
+
+let result;
+let data = {
+  namespaceUUID
+};
+
 connect
   .authenticate()
   .then(() => {
-    logger.log({
-      level: 'info',
-      label: 'channel storage',
-      message: {
-        namespaceUUID,
-        status: 'successful',
-        data: 'connection successful'
-      }
+    result = r.result({
+      data: data,
+      error: null
     });
   })
-  .catch(err => {
-    logger.log({
-      level: 'error',
-      label: 'channel storage',
-      message: {
-        namespaceUUID,
-        status: 'error',
-        data: err
+  .catch(error => {
+    result = r.result({
+      data: null,
+      error:{
+        data: data,
+        error: error
       }
     });
   });

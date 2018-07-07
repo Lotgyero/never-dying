@@ -6,8 +6,8 @@
  */
 
 import { participantScheme } from './scheme';
-import { Result } from 'local-utils';
 
+import { Result } from 'local-utils';
 const r = new Result({
   service:   'channelControl',
   module:    '',
@@ -28,18 +28,17 @@ const join = item => {
           participantUUID
         })
         .then(res => {
-          result = r.Result({
+          result = r.result({
             data:{
               channelUUID: res.dataValues.channelUUID,
               participantUUID: res.dataValues.participantUUID,
               dataValues: res.dataValues,
-              data: data
             },
             error: null
           });
         })
         .catch(error => {
-          result = r.Result({
+          result = r.result({
             data: null,
             error:{
               data: null,
@@ -51,7 +50,7 @@ const join = item => {
           });
         });
     } else {
-      result = r.Result({
+      result = r.result({
         data: null,
         error:{
           data: data,
@@ -62,7 +61,7 @@ const join = item => {
       });
     }
   } else {
-    result = r.Result({
+    result = r.result({
       data: null,
       error:{
         data: null,

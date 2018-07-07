@@ -8,15 +8,14 @@ import { serviceConnectionControl } from './services/connectionControl';
 serviceConnectionControl.start();
 
 import { channelControl } from './services/channelControl';
-
 import { participantControl } from './services/participantControl';
 
-const test = participantControl.create({
-  participantLogin: 'test',
-  participantPassword: 'test'
-});
+// const test = participantControl.create({
+//   participantLogin: 'test1',
+//   participantPassword: 'test1'
+// });
+// console.log({ test });
 
-console.log({ test });
 // const tik = setInterval(() => {
 //   console.log(currentConnection.Connections);
 // }, 1500);

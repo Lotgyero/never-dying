@@ -9,84 +9,77 @@ import { logger } from 'logger';
 import { storage } from './storage';
 const channelStorage = storage.model;
 
+import { Result } from 'local-utils';
+const r = new Result({
+  service:   'channelControl',
+  module:    '',
+  system:    '',
+  subsystem: 'control',
+  action:    'remove'
+});
+
 const remove = item => {
   let result;
   if (item) {
     const { channelUUID, deleterUUID } = item;
+    const data = {channelUUID, deleterUUID};
     if (channelUUID && deleterUUID) {
       const databaseResult = channelStorage.channel.remove(item);
-
-      if (databaseResult && databaseResult.data && !databaseResult.error) {
-        const {
-          channelUUID,
-          createrUUID,
-          ownerUUID,
-          nameChannel,
-          aboutChannel,
-          deleteByUUID
-        } = databaseResult.data;
+      if (databaseResult && databaseResult.data) {
+        if(!databaseResult.error){
+          const {
+            channelUUID,
+            createrUUID,
+            ownerUUID,
+            nameChannel,
+            aboutChannel,
+            deleteByUUID
+          } = databaseResult.data;
+          const resData = {
+            channelUUID,
+            createrUUID,
+            ownerUUID,
+            nameChannel,
+            aboutChannel,
+            deleteByUUID
+          };
+          result = r.result({
+            data: resData,
+            error: null
+          });
+        } else {
+          result = r.result({
+            data: null,
+            error:{
+              data,
+              message: 'database error',
+              error: databaseResult.error
+            }
+          });
+        }
       } else {
-        result = {
-          service: 'channelControl',
-          subsystem: 'control',
-          action: 'remove',
+        result = r.result({
           data: null,
-          error: {
-            message: 'database error ',
-            data: null
-          }
-        };
-        logger.log({
-          level: 'error',
-          label: 'channelControl channel remove',
-          message: {
-            status: 'error',
-            databaseResult: databaseResult ? databaseResult.error : null
+          error:{
+            data,
+            message: 'not result'
           }
         });
       }
     } else {
-      result = {
-        service: 'channelControl',
-        subsystem: 'control',
-        action: 'remove',
+      result =r.result({
         data: null,
-        error: {
-          message: 'not full define ',
-          data: null
-        }
-      };
-      logger.log({
-        level: 'error',
-        label: 'channelControl channel remove',
-        message: {
-          status: 'error',
-          data: {
-            dataValues: {
-              channelUUID,
-              deleterUUID
-            }
-          }
+        error:{
+          data,
+          message: 'not full define'
         }
       });
     }
   } else {
-    result = {
-      service: 'channelControl',
-      subsystem: 'control',
-      action: 'remove',
+    result = r.result({
       data: null,
-      error: {
-        message: 'is null ',
-        data: {}
-      }
-    };
-    logger.log({
-      level: 'error',
-      label: 'channelControl channel remove',
-      message: {
-        status: 'error',
-        data: 'null data'
+      error:{
+        data: null
       }
     });
   }

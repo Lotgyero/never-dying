@@ -5,13 +5,22 @@
   action    :  remove
 */
 
-import { logger } from 'logger';
 import { channelScheme } from './scheme';
+
+import { Result } from 'local-utils';
+const r = new Result({
+  service:   'channelControl',
+  module:    '',
+  system:    'storage',
+  subsystem: 'channel',
+  action:    'remove'
+});
 
 const remove = item => {
   let result;
   if (item) {
     const { channelUUID, deleterUUID } = item;
+    const data = { channelUUID, deleterUUID };
     if (channelUUID && deleterUUID) {
       channelScheme.update(
         {
@@ -20,11 +29,10 @@ const remove = item => {
         },
         { where: { channelUUID } }
           .then(res => {
-            result = {
-              service: 'channelControl',
-              subsystem: 'storage',
-              action: 'remove',
+            result = r.result({
               data: {
+                data,
+                dataValues: res.dataValues,
                 channelUUID: res.dataValues.channelUUID,
                 createrUUID: res.dataValues.createrUUID,
                 ownerUUID: res.dataValues.ownerUUID,
@@ -33,75 +41,31 @@ const remove = item => {
                 deleteByUUID: res.dataValues.deleteByUUID
               },
               error: null
-            };
-            logger.log({
-              level: 'info',
-              label: 'channelControl storage channel remove',
-              message: { status: 'success', data: res.dataValues }
             });
           })
           .catch(error => {
-            result = {
-              service: 'channelControl',
-              subsystem: 'storage',
-              action: 'remove',
+            result = r.result({
               data: null,
-              error: {
-                message: 'channelControl storage channel remove error',
-                data: error
+              error:{
+                data: data,
+                error: error
               }
-            };
-            logger.log({
-              level: 'error',
-              label: 'channelControl storage channel remove',
-              message: { status: 'error', data: error }
             });
           })
       );
     } else {
-      result = {
-        service: 'channelControl',
-        subsystem: 'storage',
-        action: 'remove',
+      result = r.result({
         data: null,
         error: {
-          message: 'channelControl storage channel remove not full define',
-          data: {
-            channelUUID,
-            deleterUUID
-          }
-        }
-      };
-
-      logger.log({
-        level: 'error',
-        label: 'channelControl storage channel remove',
-        message: {
-          status: 'error',
-          data: {
-            channelUUID,
-            deleterUUID
-          }
+          data: data
         }
       });
     }
   } else {
-    result = {
-      service: 'channelControl',
-      subsystem: 'storage',
-      action: 'remove',
+    result = r.result({
       data: null,
-      error: {
-        message: 'channelControl storage channel remove is null',
+      error:{
         data: null
-      }
-    };
-    logger.log({
-      level: 'error',
-      label: 'channelControl storage chanel remove',
-      message: {
-        status: 'error',
-        data: 'channelControl storage channel remove null data'
       }
     });
   }

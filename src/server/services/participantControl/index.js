@@ -5,8 +5,7 @@
 import config from 'config';
 import crypto from 'crypto';
 
-import { logger } from 'logger';
-
+// import { logger } from 'logger';
 import { create } from './create';
 
 class ParticipantControl {
@@ -25,7 +24,7 @@ class ParticipantControl {
         'sha512'
       );
       const participantPasswordHash = key.toString();
-      logger.info(participantPasswordHash);
+      // logger.info(participantPasswordHash);
       return await create({
         participantLogin,
         participantPasswordHash,

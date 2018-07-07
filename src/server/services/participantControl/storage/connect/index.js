@@ -12,28 +12,32 @@ const namespaceUUID = config.get('participantControl.uuid').namespace;
 import Sequelize from 'sequelize';
 const connect = new Sequelize(databaseConfig);
 
+import { Result } from 'local-utils';
+const r = new Result({
+  service:   'channelControl',
+  module:    '',
+  system:    'storage',
+  subsystem: '',
+  action:    'connect'
+});
+
+let result;
+let data = {
+  namespaceUUID
+};
+
 connect
   .authenticate()
   .then(() => {
-    logger.log({
-      level: 'info',
-      label: 'participant storage',
-      message: {
-        namespaceUUID,
-        status: 'successful',
-        data: 'connection successful'
-      }
+    result = r.result({
+      data: data,
+      error: null
     });
   })
-  .catch(err => {
-    logger.log({
-      level: 'error',
-      label: 'participant storage',
-      message: {
-        namespaceUUID,
-        status: 'error',
-        data: err
-      }
+  .catch(error => {
+    result = r.result({
+      data: null,
+      error: error
     });
   });
 export { connect };

@@ -1,12 +1,13 @@
-/*
-  service   :  channelControl
-  subsystem :  storage
-  model     :  channel
-  action    :  create
- */
-
-import { logger } from 'logger';
 import { channelScheme } from './scheme';
+
+import { Result } from 'local-utils';
+const r = new Result({
+  service:   'channelControl',
+  module:    '',
+  system:    'storage',
+  subsystem: 'channel',
+  action:    'create'
+});
 
 const create = item => {
   let result;
@@ -18,21 +19,20 @@ const create = item => {
       nameChannel,
       aboutChannel
     } = item;
+    const data={
+      channelUUID,
+      createrUUID,
+      ownerUUID,
+      nameChannel,
+      aboutChannel
+    };
     if (channelUUID && createrUUID && ownerUUID) {
       channelScheme
-        .create({
-          channelUUID: channelUUID,
-          createrUUID: createrUUID,
-          ownerUUID: ownerUUID,
-          nameChannel: nameChannel,
-          aboutChannel: aboutChannel
-        })
+        .create(data)
         .then(res => {
-          result = {
-            service: 'channel',
-            subsystem: 'storage',
-            action: 'create',
-            data: {
+          result = r.result({
+            data:{
+              dataValues: res.dataValues,
               channelUUID: res.dataValues.channelUUID,
               createrUUID: res.dataValues.createrUUID,
               ownerUUID: res.dataValues.ownerUUID,
@@ -42,75 +42,36 @@ const create = item => {
               dateDestroy: res.dataValues.dateDestroy
             },
             error: null
-          };
-
-          logger.log({
-            level: 'info',
-            label: 'channelControl storage channel create',
-            message: { status: 'success', data: res.dataValues }
           });
         })
         .catch(error => {
-          result = {
-            service: 'channel',
-            subsystem: 'storage',
-            action: 'create',
+          result = r.result({
             data: null,
-            error: {
-              message: 'channelControl storage channel create error',
-              data: error
+            error:{
+              data: data,
+              error: error
             }
-          };
-          logger.log({
-            level: 'error',
-            label: 'channelControl storage channel create',
-            message: { status: 'error', data: error }
           });
         });
     } else {
-      result = {
-        service: 'channel',
-        subsystem: 'storage',
-        action: 'create',
+      result=r.result({
         data: null,
         error: {
-          message: 'channelControl storage channel create not full define',
-          data: {
-            channelUUID,
-            createrUUID,
-            ownerUUID
-          }
-        }
-      };
-      logger.log({
-        level: 'info',
-        label: 'channelControl storage channel create',
-        message: {
-          status: 'error',
-          data: {
-            channelUUID: channelUUID,
-            createrUUID: createrUUID,
-            ownerUUID: ownerUUID
+          data: data,
+          error:{
+            message: 'not full define'
           }
         }
       });
     }
-  } else
-    result = {
-      service: 'channel',
-      subsystem: 'storage',
-      action: 'create',
+  } else {
+    result = r.result({
       data: null,
-      error: { messege: 'channel storage channel create  is null' }
-    };
-  logger.log({
-    level: 'error',
-    label: 'channelControl storage channel create',
-    message: {
-      status: 'error',
-      data: 'adding null data'
-    }
-  });
+      error:{
+        data: null
+      }
+    });
+  }
   return result;
 };
 

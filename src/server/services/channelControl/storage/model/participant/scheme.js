@@ -9,6 +9,16 @@ import { logger } from 'logger';
 import Sequelize from 'sequelize';
 import { connect } from '../../connect';
 
+import { Result } from 'local-utils';
+const r = new Result({
+  service:   'channelControl',
+  module:    '',
+  system:    'storage',
+  subsystem: 'participan',
+  action:    ''
+});
+
+
 const participantScheme = connect.define('Participant', {
   uuid: {
     type: Sequelize.UUID,

@@ -3,11 +3,19 @@
   subsystem :  channel
 */
 
-import { logger } from 'logger';
 
 // import uuidv4 from 'uuid/v4';
 // import uuidv5 from 'uuid/v5';
 // const now = uuidv4();
+
+import { Result } from 'local-utils';
+const r = new Result({
+  service:   'channelControl',
+  module:    '',
+  system:    '',
+  subsystem: 'channel',
+  action:    ''
+});
 
 import { storage } from '../storage';
 
@@ -21,26 +29,24 @@ class Channel {
       nameChannel,
       aboutChannel
     } = item;
+    const data = {
+      channelUUID,
+      createrUUID,
+      ownerUUID,
+      nameChannel,
+      aboutChannel
+    };
     this.channelUUID = channelUUID;
     this.createrUUID = createrUUID;
     this.ownerUUID = ownerUUID;
     this.nameChannel = nameChannel;
     this.aboutChannel = aboutChannel;
-
     // this.storage = storage.model;
+
     this.join = participant => {
-      logger.log({
-        level: 'info',
-        label: 'channel add participant',
-        message: this.storage.participant.add(participant)
-      });
-      // FiX condition processing
+      let result = this.storage.participant.join(participant);
+      console.log('result joun' , result, this.uuid);
       participants.push(participant);
-      logger.log({
-        level: 'info',
-        label: 'channel add participant',
-        message: { uuid: this.uuid, participant: participant }
-      });
     };
 
     this.leave = participant => {

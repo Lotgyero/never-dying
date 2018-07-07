@@ -8,10 +8,30 @@
 import { logger } from 'logger';
 import { participantScheme } from './scheme';
 
+import { Result } from 'local-utils';
+const r = new Result({
+  service:   'participantControl',
+  module:    '',
+  system:    'storage',
+  subsystem: 'participant',
+  action:    'create'
+});
+
+
 const create = item => {
   let result;
   if (item) {
-    const { participantUUID, participantLogin, participantPasswordHash } = item;
+
+    const {
+      participantUUID,
+      participantLogin,
+      participantPasswordHash } = item;
+
+    const data = {
+      participantUUID,
+      participantLogin,
+      participantPasswordHash: participantPasswordHash ? true: false };
+
     if (participantUUID && participantLogin && participantPasswordHash) {
       participantScheme
         .create({
@@ -20,106 +40,42 @@ const create = item => {
           participantPasswordHash
         })
         .then(res => {
-          result = {
-            service: 'participantControl',
-            subsystem: 'storage',
-            action: 'create',
+          result = r.result({
             data: {
               participantUUID: res.dataValues.participantUUID,
               participantLogin: res.dataValues.participantLogin,
               participantPasswordHash: res.dataValues.participantPasswordHash
                 ? true
                 : false
-            }
-          };
-          logger.log({
-            level: 'info',
-            label: 'participantControl storage participant create',
-            message: {
-              status: 'success',
-              data: {
-                participantUUID: res.dataValues.participantUUID,
-                participantLogin: res.dataValues.participantLogin,
-                participantPasswordHash: res.dataValues.participantPasswordHash
-                  ? true
-                  : false
-              }
-            }
+            },
+            error: null
           });
+
         })
         .catch(error => {
-          result = {
-            service: 'participantControl',
-            subsystem: 'storage',
-            action: 'create',
+          result ={
             data: null,
             error: {
-              message: 'participantControl storage pacticipant create error',
-              data: error
-            }
-          };
-          logger.log({
-            level: 'error',
-            label: 'participantControl storage participant create',
-            message: {
-              status: 'error',
-              message: 'create error',
-              data: {
-                participantUUID,
-                participantLogin,
-                participantPasswordHash: participantPasswordHash ? true : false
-              },
+              data: data,
               error: error
             }
-          });
+          };
         });
+
     } else {
-      result = {
-        service: 'participantControl',
-        subsystem: 'storage',
-        action: 'create',
+      result = r.result({
         data: null,
-        error: {
-          message:
-            'participantControl storage participant create not full define',
-          data: {
-            participantUUID,
-            participantLogin,
-            participantPasswordHash: participantPasswordHash ? true : false
-          }
-        }
-      };
-      logger.log({
-        level: 'error',
-        label: 'participantControl storage participant create',
-        message: {
-          status: 'error',
-          message: 'adding null data',
-          data: {
-            participantUUID,
-            participantLogin,
-            participantPasswordHash: participantPasswordHash ? true : false
-          }
+        error:{
+          data: data,
+          message: 'not full define'
         }
       });
     }
   } else {
-    result = {
-      service: 'participantControl',
-      subsystem: 'storage',
-      action: 'create',
+    result = r.result({
       data: null,
-      error: {
-        message: 'participantControl storage participant create is null',
+      error:{
         data: null
-      }
-    };
-    logger.log({
-      level: 'error',
-      label: 'participantControl storage participant create',
-      message: {
-        status: 'error',
-        message: 'adding null data'
       }
     });
   }
