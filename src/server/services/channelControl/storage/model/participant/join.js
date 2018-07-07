@@ -5,13 +5,22 @@
   action    :  join
  */
 
-import { logger } from 'logger';
 import { participantScheme } from './scheme';
+import { Result } from 'local-utils';
+
+const r = new Result({
+  service:   'channelControl',
+  module:    '',
+  system:    'storage',
+  subsystem: 'participan',
+  action:    'join'
+});
 
 const join = item => {
   let result;
   if (item) {
     const { channelUUID, participantUUID } = item;
+    const data = { channelUUID, participantUUID };
     if (channelUUID && participantUUID) {
       participantScheme
         .create({
@@ -19,95 +28,45 @@ const join = item => {
           participantUUID
         })
         .then(res => {
-          result = {
-            service: 'channelControl',
-            subsystem: 'storage',
-            action: 'join',
-            data: {
+          result = r.Result({
+            data:{
               channelUUID: res.dataValues.channelUUID,
-              participantUUID: res.dataValues.participantUUID
-            }
-          };
-          logger.log({
-            level: 'info',
-            label: 'channelControl storage participant join',
-            message: {
-              status: 'success',
-              data: {
-                dataValues: res.dataValues
-              }
-            }
+              participantUUID: res.dataValues.participantUUID,
+              dataValues: res.dataValues,
+              data: data
+            },
+            error: null
           });
         })
         .catch(error => {
-          result = {
-            service: 'channelControl',
-            subsystem: 'storage',
-            action: 'join',
+          result = r.Result({
             data: null,
-            error: {
-              message: 'pacipiant join',
-              data: {
-                dataValues: {
-                  channelUUID,
-                  participantUUID
-                },
+            error:{
+              data: null,
+              error: {
+                data: data,
                 error: error
               }
-            }
-          };
-          logger.log({
-            level: 'error',
-            label: 'channelControl storage participant join',
-            message: {
-              status: 'error',
-              data: error
             }
           });
         });
     } else {
-      result = {
-        service: 'channelControl',
-        subsystem: 'storage',
-        action: 'join',
+      result = r.Result({
         data: null,
-        error: {
-          message: 'some null value when join',
-          data: {
-            dataValues: {
-              channelUUID,
-              participantUUID
-            }
-          }
-        }
-      };
-      logger.log({
-        level: 'error',
-        label: 'channelControl storage participant join',
-        message: {
-          status: 'error',
-          data: {
-            channelUUID,
-            participantUUID
+        error:{
+          data: data,
+          error:{
+            message: 'some value is null'
           }
         }
       });
     }
   } else {
-    result = {
-      service: 'channelControl',
-      subsystem: 'storage',
-      action: 'join',
+    result = r.Result({
       data: null,
-      error: { message: 'join participant', data: null }
-    };
-    logger.log({
-      level: 'error',
-      label: 'channelControl storage participant join',
-      message: {
-        status: 'error',
-        message: 'join null data',
-        data: null
+      error:{
+        data: null,
+        message: 'none data'
       }
     });
   }

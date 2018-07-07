@@ -4,7 +4,6 @@
   model     :  participan
  */
 
-import { logger } from 'logger';
 
 import { participantScheme } from './scheme';
 import { join } from './join';

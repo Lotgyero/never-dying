@@ -3,15 +3,24 @@
   subsystem :  storage
   model     :  participan
   action    :  leave
- */
+*/
 
-import { logger } from 'logger';
 import { participantScheme } from './scheme';
+import { Result } from 'local-utils';
+
+const r = new Result({
+  service:   'channelControl',
+  module:    '',
+  system:    'storage',
+  subsystem: 'participan',
+  action:    'leave'
+});
 
 const leave = item => {
   let result;
   if (item) {
     const { channelUUID, participantUUID } = item;
+    const data = { channelUUID, participantUUID };
     if (channelUUID && participantUUID) {
       participantScheme
         .update(
@@ -19,92 +28,44 @@ const leave = item => {
             participantDateLeave: new Date()
           },
           {
-            where: {
-              channelUUID,
-              participantUUID
-            }
+            where: data
           }
         )
         .then(res => {
-          result = {
-            service: 'channelControl',
-            subsystem: 'storage',
-            action: 'leave',
-            data: {
+          result = r.Result({
+            data:{
               uuid: res.dataValues.uuid,
               channelUUID: res.dataValues.channelUUID,
               participantUUID: res.dataValues.participantUUID,
               participantDateLeave: res.dataValues.participantDateLeave
-            }
-          };
-          logger.log({
-            level: 'info',
-            label: 'channelControl storage participan leave',
-            message: { status: 'success', data: res.dataValues }
+            },
+            error: null
           });
         })
         .catch(error => {
-          result = {
-            service: 'channelControl',
-            subsystem: 'storage',
-            action: 'leave',
+          result = r.Result({
             data: null,
             error: {
-              message: 'channelControl participant leave error',
-              data: error
+              data: data,
+              error: error
             }
-          };
-          logger.log({
-            level: 'error',
-            label: 'channelControl storage participan leave',
-            message: { status: 'error', data: error }
           });
         });
     } else {
-      result = {
-        service: 'channelControl',
-        subsystem: 'storage',
-        action: 'leave',
+      result = r.Result({
         data: null,
-        error: {
-          message: 'channelControl storage participant leave not full define',
-          data: {
-            channelUUID,
-            participantUUID
-          }
-        }
-      };
-      logger.log({
-        level: 'error',
-        label: 'channelControl storage participant leave',
-        message: {
-          status: 'error',
-          data: {
-            channelUUID,
-            participantUUID
-          }
+        error:{
+          data: data
         }
       });
     }
   } else {
-    result = {
-      service: 'channelControl',
-      subsystem: 'storage',
-      action: 'leave',
+    result ={
       data: null,
       error: {
-        message: 'channelControl storage participant leave is null',
         data: null
       }
     };
-    logger.log({
-      level: 'error',
-      label: 'channelControl storage participant leave',
-      message: {
-        status: 'error',
-        data: 'channelControl storage participant leave null data'
-      }
-    });
   }
   return result;
 };
