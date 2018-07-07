@@ -12,11 +12,11 @@ class Result{
     this.subsystem = subsystem;
     this.action = action;
   }
-  result({data, error}){
+  result({uuid, data, error}){
     logger.log({
       level: error? 'error': 'info',
       label: `${this.service} ${this.module} ${this.system} ${this.subsystem} ${this.action}`,
-      message:{data, error}
+      message:{uuid, data, error}
     });
     return{
       serviceInfo:{
@@ -26,6 +26,7 @@ class Result{
         subsystem: this.subsystem,
         action: this.action
       },
+      uuid: uuid,
       data: data,
       error: error
     };
