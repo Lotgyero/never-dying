@@ -44,39 +44,36 @@ class Channel {
     // this.storage = storage.model;
 
     this.join = participant => {
-      let result = this.storage.participant.join(participant);
-      console.log('result joun' , result, this.uuid);
+      const {participantUUID}  = participant;
+      let result = this.storage.participant.join({channelUUID, participantUUID});
+      console.log('result joun' , result, this.channelUUID);
       participants.push(participant);
     };
 
     this.leave = participant => {
-      const newParticipant = participants.filter(part => {
+      const {participantUUID}  = participant;
+      let result = this.storage.participant.leave({channelUUID, participantUUID});
+
+      const newParticipants = participants.filter(part => {
         return part !== participant;
       });
-      participants = newParticipant;
-      logger.log({
-        level: 'info',
-        label: 'channel delete participant',
-        message: { uuid: this.uuid, removeParticipant: participant }
-      });
+
+      participants = newParticipants;
+
     };
     this.participants = () => {
-      logger.log({
-        level: 'info',
-        label: 'channel participants list',
-        message: { uuid: this.uuid, participants: participants }
-      });
-      return participants;
+      let result = this.storage.participant.list({channelUUID});
+      return result;
     };
   }
   join=(participant)=>{
     this.join(participant);
   }
-  remove=(participant)=>{
-    this.remove(participant);
+  leave=(participant)=>{
+    this.leave(participant);
   }
   get participants() {
-    return this.participants;
+    return this.participants();
   }
 }
 export { Channel };
