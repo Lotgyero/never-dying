@@ -34,6 +34,7 @@
     "koa-session2": "^2.2.6",
     "koa-static": "^5.0.0",
     "loglevel": "^1.6.1",
+    "mock-socket": "^8.0.1",
     "mongodb": "^3.0.10",
     "mongoose": "^5.1.6",
     "node": "^10.5.0",
@@ -56,7 +57,7 @@
     "sequelize": "^4.38.0",
     "uuid": "^3.2.1",
     "uws": "^10.148.1",
-    "yarn": "^1.7.0"
+    "yarn": "^1.8.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.49",
@@ -89,7 +90,6 @@
     "gulp": "^4.0.0",
     "gutil": "^1.6.4",
     "jest": "^23.1.0",
-    "mock-socket": "^7.1.0",
     "npm": "^6.1.0",
     "prettier": "^1.13.4",
     "react-devtools": "^3.2.3",
